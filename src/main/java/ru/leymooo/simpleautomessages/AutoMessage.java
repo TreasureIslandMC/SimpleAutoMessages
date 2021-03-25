@@ -116,17 +116,9 @@ public class AutoMessage {
         }
     }
 
-    public enum CheckResult {
-        OK,
-        NO_SERVERS,
-        NO_MESSAGES,
-        INTERVAL_NOT_SET,
-        ALREADY_RUNNING
-    }
-
     private static class MessageContainer {
 
-        private final static JsonParser JSON_PARSER = new JsonParser();
+        private static final JsonParser JSON_PARSER = new JsonParser();
 
         private final String message;
         private final Component preCreated;

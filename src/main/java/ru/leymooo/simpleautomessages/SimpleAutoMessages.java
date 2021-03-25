@@ -96,6 +96,7 @@ public class SimpleAutoMessages {
                             logger.warn("Messages for '{}' is not specified or empty", section);
                             break;
                         case NO_SERVERS:
+                        default:
                             logger.warn("Servers for '{}' is not specified or empty", section);
                             break;
                     }

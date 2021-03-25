@@ -83,7 +83,7 @@ public class SimpleAutoMessages {
                 messages.clear();
                 for (String section : config.getKeys()) {
                     AutoMessage am = AutoMessage.fromConfiguration(config.getSection(section), server);
-                    AutoMessage.CheckResult result = am.checkAndRun(server.getPluginManager().fromInstance(SimpleAutoMessages.this).get());
+                    CheckResult result = am.checkAndRun(server.getPluginManager().fromInstance(SimpleAutoMessages.this).get());
                     switch (result) {
                         case OK:
                             logger.info("'{}' was started", section);

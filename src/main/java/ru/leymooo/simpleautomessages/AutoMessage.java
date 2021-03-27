@@ -12,7 +12,11 @@ import com.velocitypowered.api.scheduler.ScheduledTask;
 import net.kyori.text.Component;
 import net.kyori.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.text.serializer.legacy.LegacyComponentSerializer;
-import net.md_5.bungee.config.Configuration;
+import org.spongepowered.configurate.CommentedConfigurationNode;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.loader.ConfigurationLoader;
+import org.spongepowered.configurate.serialize.SerializationException;
+import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -42,15 +46,13 @@ public class AutoMessage {
         messages.forEach(message -> this.messages.add(new MessageContainer(message)));
         parseServers(servers);
     }
-
-    public static AutoMessage fromConfiguration(Configuration configuration, ProxyServer server) {
+    public static AutoMessage fromConfiguration(CommentedConfigurationNode root, ProxyServer server) throws SerializationException {
         return new AutoMessage(server,
-                configuration.getStringList("servers"),
-                configuration.getInt("interval", 0),
-                configuration.getBoolean("random", false),
-                configuration.getStringList("messages"));
+                root.node("servers").getList(String.class),
+                root.node("interval").getInt(0),
+                root.node("random").getBoolean(false),
+                root.node("messages").getList(String.class));
     }
-
     private void parseServers(List<String> servers) {
         servers.stream().filter("global"::equalsIgnoreCase).findAny().ifPresent(s -> this.global = true);
         if (!global) {
